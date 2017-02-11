@@ -9,8 +9,7 @@ import org.antlr.v4.runtime.tree.ParseTree;
 
 public class Tool {
 	public static void main(String[] args) {
-		// YOU MUST FILL THIS IN
-		translate("int *a");
+		translate("int (*a)[];");
 	}
 
 	public static String translate(String cdeclText) {
@@ -19,9 +18,13 @@ public class Tool {
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 		CDeclParser parser = new CDeclParser(tokens);
 		ParseTree tree = parser.declaration();
-		System.out.println(tree.toStringTree(parser));
+
+		EnglishGenerator generator=new EnglishGenerator();
+
 		Trees.inspect(tree, parser);
 
-		return "";
+		String str=generator.visit(tree);
+
+		return(str);
 	}
 }
